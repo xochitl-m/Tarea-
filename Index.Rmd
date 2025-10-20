@@ -1,0 +1,168 @@
+---
+title: "Variables aleatorias"
+author: "Saory"
+date: "2025-10-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## definición. 
+Una variable aleatorea $X$ se define como un mapeo de $\Omega$ a los nùmeros reales $\mathbb{R}$. Es decir, convierte el espacio muestral numérico. Por ejemplo, al tirar una moneda al aire, el espacio muesstral es $\{A,S\}, podmos definir una vareable aleatorio como:
+$$
+
+X_1= \begin{cases}
+
+A&100\\
+S&50
+\end{cases}
+$$
+## tipos
+Existen tres tipos y son:
+- Continuas
+- Discretas
+- Mixtas
+las variables aleatorias continuas tienen un numéro infinito de elememtos de elementos, mientras que las discretas tienen un nùmero finito contable de elementos. La variable mixta, es una combinaciòn de variable aleatoria continua y discreta. 
+
+
+## Distribuciones 
+Las variables aleatorias se pueden caracterizar mediante dos funciones; la función de distribución acumalativa, $F_X(X)$ y la funciòn de densidad. $f_x(x)$. 
+
+## L afuncion de distribucion acumulativa
+La funcion de distribuciones acumulativa se define como. 
+$$
+F_X(X)=P_r\{X \le x\}
+$$
+
+Además, cumple con las siguientes propiedades
+$$
+0\le F_X(x) \le 1\\
+\mbox{Si}\;\ a < b, F_X(a) \le F_X(b)\\
+F_X(\infty)=1
+$$
+
+En `R´, generamos distribuciones usando los comandos: 
+- binom variable aleatoria binomial
+- norm variable aleatoria normal o Guassiana
+_ exp variable aleatoria exponencial 
+- 'unif' variable aleatorea 
+
+y poniendole un p, por ejemplo: 
+{r}
+x <- seq(0,4, length=100)
+y <-pnorm(x, mean=0, sd=2)
+y1 <- pnorm(x, mean=2, sd=2)
+plot(x,y, type= "l")
+lines(x,y1, col="green")
+
+## La funcion de denidad de probabilidad (PDF)
+La funcion de densidad de probabilidad, $f_X(x)4$, se define como: 
+$$
+f_x(x)= \frac{d}{dx}\left\{F_X(x)\right\}
+$$
+
+De la misma manera que la distribucion ($F_X(x)$), la densidad ($f_X(x)$), se puede generar mediante los comandos 'binom`, norm, `exp, etc, anteponiendo una `d, por ejmplo dbinom, dexp, etc. 
+
+{r, densidad}
+x <- seq(1,3, length=100)
+y <- dexp (x, rate=2)
+y1 <- dexp(x, rate=3)
+plot(x,y, type= "l", col="#8D5F8C", lwd=2, main= "Distribuciòn exponencial")
+lines(x,y1, col="#F5D2D2", lwd=3)
+
+## Generaciòn de valores 
+la generacion de valores de una distribuciòn usando`r`, anteponemos la letra r antes de culaquier nombre de distribuciòn o densidad, por ejemplo rbinom, norm, etc. 
+Para generar valoresde una distribución usando r, anteponemos la letra r antes de calcular nombre de distribucion o densidad, por ejemplo rbinom, `rnorm, etc 
+`
+
+{r, generacion}
+valores <- rnorm(100)
+uniforme <- runif(10000, -1,1)
+plot(valores, type="l", col="#0BA6DF", main="valores Guassianos", xlab="interaciòn", 
+ylab="valores", ylim=c(-3,3))
+lines(valores, col="#E62727")
+
+[1] -0.4528812 0.0691681 -0.2524828 -0.9879538 -0.5513022 0.2322290 0.3367511 0.3624852
+[9] 0.7901128 0.8176394
+
+·· Momentosde las funciones de densidad 
+caracterizan la posicion, ancho, asimetria y picudez de una densidad$f_X(x)$. Entre los momentos más conocidos: 
+-MEDIA
+-VARIANZA.
+-ASIMETÍA
+
+
+{r, media}
+x <- seq(-4,4, length=100)
+y1 <- dnorm(x, mean=0, sd=1)
+y2 <- dnorm(x, mean=1, sd=1)
+plot(x,y1, type="l", col="#F7A5A5", lwd=2)
+lines(x, y2, col="#BBDCE5")
+grid(col="#F2EDD1", lwd= 2, lty="dotted", ny=8)
+
+Para la varianza se tiene: 
+{r, varianza}
+x <- seq(-8,8, length=1000)
+y <- dnorm(x, mean=0, sd=1)
+y2 <- dnorm(x, sd=2)
+y3 <- dnorm(x, sd=5)
+plot(x,y, type="l", col="#3B38A0" )
+lines(x,y2, col="#DD0303")
+lines(x,y3, col="#BBDCE5")
+grid(col="#A6B28B")
+
+## LOS MOMENTOS DE ORIGEN 
+ Los momentos de origen se define como: 
+ 
+$$
+\mathbb{E}\left\{X^n\rigth\}=
+\begin{cases}
+\sum_j{x_j^n P(X=x_j)} & \mbox{si es discreto}\\
+\int_{\matthbb{R}}{(x^nf_X(x)\ dx} & \mbox{si es continuo}
+\end{cases}
+$$
+cuando $n=14, tenemos la media. 
+## MOMENTOS CENTRALES
+LOS MOMENTOS CENTRALES SE DEFINEN COMO:
+
+$$
+\mathbb{E}\left\{X-\mu)\rigth\}=
+\begin{cases}
+\sum_j{x_j-\mu)^n P(X=x_j)}&\mbox{si es continuo}
+\end{cases}
+$$
+
+donde $\mu$ es el moemnto con respecto al origen de orden$1$.
+
+##La Variable Aleatoria Exponencial
+
+La variable aleatoria exponencial describe el tiempo que transcurre hasta que ocurre un evento en un proceso de Poisson, es decir, un proceso donde los eventos ocurren de forma continua e independiente a una tasa promedio constante. Un ejemplo clasico es el tiempo hasta que una particula radiactiva se desintegra o el tiempo hasta que llega el proximo cliente a una tienda. ???
+
+Esta definida por un uico parametro, 
+
+\lambda(lambda), conocido como el parametro de tasa (rate parameter), que representa el numero promedio de eventos que ocurren por unidad de tiempo.
+
+##Formulas Principales
+Función de Densidad de Probabilidad (PDF)
+La PDF nos da la probabilidad relativa de que el evento ocurra en un momento exacto $x$. Para una variable aleatoria exponencial $X\sim\mbox{Exp}(\lambda)$, su PDF es:
+
+
+$$
+f=\begin{cases}
+\alpha & x>0\\
+\beta & x<0
+\end{cases}
+$$
+
+## Función de Distribucion Acumulada (CDF)
+La CDF nos da la probabilidad de que el evento ocurra en o antes de un tiempo $x$. Su formula es:
+$$
+
+
+$$
+Donde:
+
+$x$ es el valor de la variable aleatoria (tiempo).
+ es la base del logaritmo natural.
+ ($\lambda) es el parametro de tasa.
